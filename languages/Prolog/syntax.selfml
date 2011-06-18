@@ -1,0 +1,33 @@
+(root source.prolog
+    (zone string.quoted.single.prolog
+        (start
+            (regex '
+                (0 punctuation.definition.string.begin.prolog)))
+        (end
+            (regex '
+                (0 punctuation.definition.string.end.prolog)))
+        (subzones
+            (zone constant.character.escape.prolog
+                (match
+                    (regex \\.)))
+            (zone constant.character.escape.quote.prolog
+                (match ''))))
+    (zone comment.block.prolog
+        (start
+            (regex /\*
+                (0 punctuation.definition.comment.prolog)))
+        (end
+            (regex \*/
+                (0 punctuation.definition.comment.prolog))))
+    (zone comment.line.percentage.prolog
+        (match
+            (regex [(%).*$\n?]
+                (1 punctuation.definition.comment.prolog))))
+    (zone keyword.operator.definition.prolog
+        (match :-))
+    (zone variable.other.prolog
+        (match
+            (regex [\b[A-Z][a-zA-Z0-9_]*\b])))
+    (zone constant.other.symbol.prolog
+        (match
+            (regex [\b[a-z][a-zA-Z0-9_]*\b]))))

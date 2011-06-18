@@ -1,0 +1,3 @@
+(folding
+    (start [%\s*region \w*])
+    (stop [%\s*end(\s*region)?]))

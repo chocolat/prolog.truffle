@@ -1,0 +1,37 @@
+(trigger
+    (key [[cmd]R]))
+
+(name Run)
+
+(only-in source.prolog)
+
+(input nothing)
+
+(output nothing)
+
+(save nothing)
+
+(script [#!/bin/bash
+
+TPROLOG=${TM_PROLOG:-gprolog}
+
+esc () {
+STR="$1" ruby <<"RUBY"
+   str = ENV['STR']
+   str = str.gsub(/'/, "'\\\\''")
+   str = str.gsub(/[\\"]/, '\\\\\\0')
+   print "'#{str}'"
+RUBY
+}
+
+osascript <<- APPLESCRIPT
+tell application "Terminal"
+	launch
+	activate
+	do script "clear; cd $(esc "${TM_DIRECTORY}"); ${TPROLOG} --entry-goal \"consult('${TM_FILEPATH}')\""
+	set position of first window to {100, 100}
+end tell
+APPLESCRIPT
+
+
+])
